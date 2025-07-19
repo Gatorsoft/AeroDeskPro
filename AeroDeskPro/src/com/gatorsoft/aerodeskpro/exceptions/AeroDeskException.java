@@ -1,12 +1,9 @@
 package com.gatorsoft.aerodeskpro.exceptions;
-/**
- * Custom exception class for AeroDesk Pro application
- * Provides detailed error information for business logic violations
- */
+
 public class AeroDeskException extends Exception {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     // Error categories
     public enum ErrorCategory {
         DATABASE_ERROR,
@@ -16,11 +13,11 @@ public class AeroDeskException extends Exception {
         SYSTEM_ERROR,
         EXTERNAL_SERVICE_ERROR
     }
-    
+
     private final ErrorCategory category;
     private final String errorCode;
     private final Object[] parameters;
-    
+
     /**
      * Constructor with message and cause
      */
@@ -30,7 +27,7 @@ public class AeroDeskException extends Exception {
         this.errorCode = "SYSTEM_ERROR";
         this.parameters = null;
     }
-    
+
     /**
      * Constructor with message, cause and category
      */
@@ -40,7 +37,7 @@ public class AeroDeskException extends Exception {
         this.errorCode = category.name();
         this.parameters = null;
     }
-    
+
     /**
      * Constructor with message, cause, category and error code
      */
@@ -50,41 +47,41 @@ public class AeroDeskException extends Exception {
         this.errorCode = errorCode;
         this.parameters = null;
     }
-    
+
     /**
      * Constructor with message, cause, category, error code and parameters
      */
-    public AeroDeskException(String message, Throwable cause, ErrorCategory category, 
-                           String errorCode, Object... parameters) {
+    public AeroDeskException(String message, Throwable cause, ErrorCategory category,
+            String errorCode, Object... parameters) {
         super(message, cause);
         this.category = category;
         this.errorCode = errorCode;
         this.parameters = parameters;
     }
- public AeroDeskException() {
-    this("Unknown error", null, ErrorCategory.SYSTEM_ERROR, "SYSTEM_ERROR");
-}
 
-    
+    public AeroDeskException() {
+        this("Unknown error", null, ErrorCategory.SYSTEM_ERROR, "SYSTEM_ERROR");
+    }
+
     /**
      * Constructor with message and category
      */
     public AeroDeskException(String message, ErrorCategory category) {
         this(message, null, category);
     }
-    
+
     public ErrorCategory getCategory() {
         return category;
     }
-    
+
     public String getErrorCode() {
         return errorCode;
     }
-    
+
     public Object[] getParameters() {
         return parameters;
     }
-    
+
     /**
      * Returns a detailed error message including category and error code
      */
@@ -93,18 +90,20 @@ public class AeroDeskException extends Exception {
         sb.append("[").append(category).append("] ");
         sb.append("[").append(errorCode).append("] ");
         sb.append(getMessage());
-        
+
         if (parameters != null && parameters.length > 0) {
             sb.append(" - Parameters: ");
             for (int i = 0; i < parameters.length; i++) {
-                if (i > 0) sb.append(", ");
+                if (i > 0) {
+                    sb.append(", ");
+                }
                 sb.append(parameters[i]);
             }
         }
-        
+
         return sb.toString();
     }
-    
+
     @Override
     public String toString() {
         return getDetailedMessage();
