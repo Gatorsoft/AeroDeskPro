@@ -5,7 +5,9 @@ import com.gatorsoft.aerodeskpro.entity.GateStatus;
 import com.gatorsoft.aerodeskpro.entity.GateType;
 import com.gatorsoft.aerodeskpro.models.Gate;
 import com.gatorsoft.aerodeskpro.exceptions.AeroDeskException;
+import com.gatorsoft.aerodeskpro.models.GateSchedule;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -252,4 +254,36 @@ public class GateDAO {
         // gate.setCreatedAt(resultSet.getString("created_at"));
         return gate;
     }
+    // Add to your GateDAO class
+
+private static final String SELECT_GATE_SCHEDULE = "SELECT * FROM gate_schedule WHERE gate_id = ? AND schedule_date = ?";
+
+public GateSchedule findGateSchedule(int gateId, LocalDate date) throws AeroDeskException {
+    try (Connection connection = DatabaseConnection.getConnection(); 
+         PreparedStatement statement = connection.prepareStatement(SELECT_GATE_SCHEDULE)) {
+        statement.setInt(1, gateId);
+        statement.setDate(2, java.sql.Date.valueOf(date));
+
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                // Map the result to a GateSchedule object
+                GateSchedule schedule = new GateSchedule();
+                schedule.setGateId(gateId);
+                schedule.setDate(date);
+                // Set other relevant properties from the result set, e.g., availability, assigned flight, etc.
+                schedule.setFlightId(resultSet.getInt("flight_id"));
+                schedule.setStatus(resultSet.getString("status"));
+                // Additional fields can be mapped as necessary
+                return schedule;
+            } else {
+                return null; // No schedule found for the gate on that date
+            }
+        }
+
+    } catch (SQLException e) {
+        LOGGER.log(Level.SEVERE, "Error finding gate schedule for gateId: " + gateId, e);
+        throw new AeroDeskException("Failed to find gate schedule", e);
+    }
+}
+
 }
