@@ -87,9 +87,9 @@ public class FlightDAO {
             statement.setTimestamp(3, Timestamp.valueOf(flight.getArrivalTime()));
             statement.setString(4, flight.getOrigin());
             statement.setString(5, flight.getDestination());
-            statement.setString(6, flight.getGateNumber());
+            statement.setInt(6, flight.getGateNumber());
             statement.setString(7, flight.getStatus().name());
-            statement.setString(8, flight.getAircraftType());
+            statement.setInt(8, flight.getAircraftType());
             statement.setInt(9, flight.getCapacity());
             statement.setTimestamp(10, Timestamp.valueOf(flight.getCreatedAt()));
 
@@ -235,9 +235,9 @@ public class FlightDAO {
             statement.setTimestamp(3, Timestamp.valueOf(flight.getArrivalTime()));
             statement.setString(4, flight.getOrigin());
             statement.setString(5, flight.getDestination());
-            statement.setString(6, flight.getGateNumber());
+            statement.setInt(6, flight.getGateNumber());
             statement.setString(7, flight.getStatus().name());
-            statement.setString(8, flight.getAircraftType());
+            statement.setInt(8, flight.getAircraftType());
             statement.setInt(9, flight.getCapacity());
             statement.setInt(10, flight.getFlightId());
 
@@ -436,9 +436,9 @@ public class FlightDAO {
         flight.setArrivalTime(resultSet.getTimestamp("arrival_time").toLocalDateTime());
         flight.setOrigin(resultSet.getString("origin"));
         flight.setDestination(resultSet.getString("destination"));
-        flight.setGateNumber(resultSet.getString("gate_number"));
+        flight.setGateNumber(resultSet.getInt("gate_number"));
         flight.setStatus(FlightStatus.valueOf(resultSet.getString("status")));
-        flight.setAircraftType(resultSet.getString("aircraft_type"));
+        flight.setAircraftType(resultSet.getInt("aircraft_type"));
         flight.setCapacity(resultSet.getInt("capacity"));
 
         Timestamp createdTimestamp = resultSet.getTimestamp("created_at");
