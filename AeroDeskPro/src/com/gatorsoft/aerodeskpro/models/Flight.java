@@ -20,9 +20,9 @@ public class Flight {
     private LocalDateTime arrivalTime;
     private String origin;
     private String destination;
-    private String gateNumber;
+    private int gateNumber;
     private FlightStatus status;
-    private String aircraftType;
+    private int aircraftType;
     private int capacity;
     private LocalDateTime createdAt;
 
@@ -34,7 +34,7 @@ public class Flight {
 
     public Flight(String flightNumber, LocalDateTime departureTime,
             LocalDateTime arrivalTime, String origin, String destination,
-            String aircraftType, int capacity) {
+            int aircraftType, int capacity) {
         this();
         this.flightNumber = flightNumber;
         this.departureTime = departureTime;
@@ -97,12 +97,13 @@ public class Flight {
         this.destination = destination;
     }
 
-    public String getGateNumber() {
+    public int getGateNumber() {
         return gateNumber;
     }
 
-    public void setGateNumber(String gateNumber) {
+    public int setGateNumber(int gateNumber) {
         this.gateNumber = gateNumber;
+        return gateNumber;
     }
 
     public FlightStatus getStatus() {
@@ -113,11 +114,11 @@ public class Flight {
         this.status = status;
     }
 
-    public String getAircraftType() {
+    public int getAircraftType() {
         return aircraftType;
     }
 
-    public void setAircraftType(String aircraftType) {
+    public void setAircraftType(int aircraftType) {
         this.aircraftType = aircraftType;
     }
 
@@ -160,12 +161,27 @@ public class Flight {
         return 0;
     }
 
-    // Validation method
-    public boolean isValid() {
-        return flightNumber != null && !flightNumber.trim().isEmpty()
-                && departureTime != null && arrivalTime != null && origin != null
-                && destination != null && capacity > 0 && aircraftType != null;
-    }
+public boolean isValid() {
+    return isFlightNumberValid() && isTimeValid() && isLocationValid() && isCapacityValid();
+}
+
+private boolean isFlightNumberValid() {
+    return flightNumber != null && !flightNumber.trim().isEmpty();
+}
+
+private boolean isTimeValid() {
+    return departureTime != null && arrivalTime != null;
+}
+
+private boolean isLocationValid() {
+    return origin != null && destination != null;
+}
+
+private boolean isCapacityValid() {
+    return capacity > 0;
+}
+
+
 
     @Override
     public String toString() {
