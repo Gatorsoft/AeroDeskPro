@@ -1,11 +1,7 @@
 package com.gatorsoft.aerodeskpro.models;
 
 import java.time.LocalDateTime;
-
-/**
- * GateAssignment model representing gate assignments for flights
- * This matches the database schema for the 'gate_assignments' table
- */
+//
 public class GateAssignment {
     private int assignmentId;               // assignment_id (Primary Key)
     private int flightId;                   // flight_id (Foreign Key)
