@@ -147,6 +147,9 @@ public class FlightDAO {
 
     /**
      * Finds a flight by its ID
+     * @param flightId
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
     public Flight getFlightById(int flightId) throws AeroDeskException {
         Connection connection = null;
