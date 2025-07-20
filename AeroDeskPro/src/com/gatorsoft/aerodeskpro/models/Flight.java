@@ -29,7 +29,7 @@ public class Flight {
     // Constructors
     public Flight() {
         this.createdAt = LocalDateTime.now();
-        this.status = FlightStatus.SCHEDULED;
+        this.status = FlightStatus.scheduled;
     }
 
     public Flight(String flightNumber, LocalDateTime departureTime,
@@ -143,15 +143,15 @@ public class Flight {
 
     // Business logic methods
     public boolean isActive() {
-        return status != FlightStatus.CANCELLED && status != FlightStatus.COMPLETED;
+        return status != FlightStatus.cancelled && status != FlightStatus.completed;
     }
 
     public boolean canBeModified() {
-        return status == FlightStatus.SCHEDULED || status == FlightStatus.DELAYED;
+        return status == FlightStatus.scheduled || status == FlightStatus.delayed;
     }
 
     public boolean requiresGate() {
-        return status == FlightStatus.BOARDING || status == FlightStatus.SCHEDULED;
+        return status == FlightStatus.boarding || status == FlightStatus.scheduled;
     }
 
     public long getDurationMinutes() {

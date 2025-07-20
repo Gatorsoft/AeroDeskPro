@@ -51,7 +51,7 @@ public class FlightService {
         }
 
         // Set initial status
-        flight.setStatus(FlightStatus.SCHEDULED);
+        flight.setStatus(FlightStatus.scheduled);
 
         // Save to database
         boolean success = flightDAO.insertFlight(flight);
@@ -150,14 +150,14 @@ public class FlightService {
         }
 
         // Business rule: Can only cancel scheduled or delayed flights
-        if (flight.getStatus() != FlightStatus.SCHEDULED
-                && flight.getStatus() != FlightStatus.DELAYED) {
+        if (flight.getStatus() != FlightStatus.scheduled
+                && flight.getStatus() != FlightStatus.delayed) {
             throw new AeroDeskException(
                     "Cannot cancel flight in status: " + flight.getStatus(),
                     ErrorCategory.BUSINESS_RULE_VIOLATION);
         }
 
-        boolean success = flightDAO.updateFlightStatus(flightId, FlightStatus.CANCELLED);
+        boolean success = flightDAO.updateFlightStatus(flightId, FlightStatus.cancelled);
 
         if (success) {
             LOGGER.info("Flight cancelled successfully: " + flight.getFlightNumber());
@@ -253,7 +253,7 @@ public class FlightService {
      * Gets delayed flights
      */
     public List<Flight> getDelayedFlights() throws AeroDeskException {
-        return getFlightsByStatus(FlightStatus.DELAYED);
+        return getFlightsByStatus(FlightStatus.delayed);
     }
 
     /**
@@ -269,7 +269,7 @@ public class FlightService {
         }
 
         // Business rule: Can only delay scheduled flights
-        if (flight.getStatus() != FlightStatus.SCHEDULED) {
+        if (flight.getStatus() != FlightStatus.scheduled) {
             throw new AeroDeskException(
                     "Can only delay scheduled flights. Current status: "
                     + "flight.getStatus() ",
@@ -281,7 +281,7 @@ public class FlightService {
         // Assume arrival time is adjusted proportionally
         long originalDuration = flight.getDurationMinutes();
         flight.setArrivalTime(newDepartureTime.plusMinutes(originalDuration));
-        flight.setStatus(FlightStatus.DELAYED);
+        flight.setStatus(FlightStatus.delayed);
 
         boolean success = flightDAO.updateFlight(flight);
 
@@ -413,23 +413,23 @@ public class FlightService {
      */
     private boolean isValidStatusTransition(FlightStatus current, FlightStatus target) {
         switch (current) {
-            case SCHEDULED:
-                return target == FlightStatus.DELAYED || target == FlightStatus.BOARDING
-                        || target == FlightStatus.CANCELLED;
-            case DELAYED:
-                return target == FlightStatus.BOARDING || target == FlightStatus.CANCELLED
-                        || target == FlightStatus.SCHEDULED;
-            case BOARDING:
-                return target == FlightStatus.DEPARTED || target == FlightStatus.DELAYED
-                        || target == FlightStatus.CANCELLED;
-            case DEPARTED:
-                return target == FlightStatus.IN_FLIGHT;
-            case IN_FLIGHT:
-                return target == FlightStatus.ARRIVED;
-            case ARRIVED:
-                return target == FlightStatus.COMPLETED;
-            case COMPLETED:
-            case CANCELLED:
+            case scheduled:
+                return target == FlightStatus.delayed || target == FlightStatus.boarding
+                        || target == FlightStatus.cancelled;
+            case delayed:
+                return target == FlightStatus.boarding || target == FlightStatus.cancelled
+                        || target == FlightStatus.scheduled;
+            case boarding:
+                return target == FlightStatus.departed || target == FlightStatus.delayed
+                        || target == FlightStatus.cancelled;
+            case departed:
+                return target == FlightStatus.in_flight;
+            case in_flight:
+                return target == FlightStatus.arrived;
+            case arrived:
+                return target == FlightStatus.completed;
+            case completed:
+            case cancelled:
                 return false; // Terminal states
             default:
                 return false;
@@ -491,19 +491,19 @@ public class FlightService {
      */
     private void handleStatusChange(Flight flight, FlightStatus newStatus) {
         switch (newStatus) {
-            case BOARDING:
+            case boarding:
                 LOGGER.info("Flight boarding started: " + flight.getFlightNumber());
                 // Notify ground crew, update passenger displays
                 break;
-            case DEPARTED:
+            case departed:
                 LOGGER.info("Flight departed: " + flight.getFlightNumber());
                 // Release gate, notify air traffic control
                 break;
-            case ARRIVED:
+            case arrived:
                 LOGGER.info("Flight arrived: " + flight.getFlightNumber());
                 // Assign baggage claim, notify ground services
                 break;
-            case COMPLETED:
+            case completed:
                 LOGGER.info("Flight completed: " + flight.getFlightNumber());
                 // Final cleanup, generate reports
                 break;
