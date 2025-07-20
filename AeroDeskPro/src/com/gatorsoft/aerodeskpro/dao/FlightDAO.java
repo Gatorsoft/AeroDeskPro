@@ -35,34 +35,34 @@ public class FlightDAO {
     private static final Logger LOGGER = Logger.getLogger(FlightDAO.class.getName());
 
     // SQL Queries
-    private static final String INSERT_FLIGHT = "INSERT INTO flights (flight_number, departure_time, arrival_time, origin, destination, "
-            + "gate_number, status, aircraft_type, capacity, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_FLIGHT = "INSERT INTO flights (flight_number, scheduled_departure, scheduled_arrival, origin_airport, destination_airport_airport, "
+            + "gate_id, flight_status, aircraft_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String SELECT_ALL_FLIGHTS = "SELECT flight_id, flight_number, departure_time, arrival_time, origin, destination, "
-            + "gate_number, status, aircraft_type, capacity, created_at FROM flights ORDER BY departure_time";
+    private static final String SELECT_ALL_FLIGHTS = "SELECT flight_id, flight_number, scheduled_departure, scheduled_arrival, origin_airport, destination_airport, "
+            + "gate_id, flight_status, aircraft_id, created_at FROM flights ORDER BY scheduled_departure";
 
-    private static final String SELECT_FLIGHT_BY_ID = "SELECT flight_id, flight_number, departure_time, arrival_time, origin, destination, "
-            + "gate_number, status, aircraft_type, capacity, created_at FROM flights WHERE flight_id = ?";
+    private static final String SELECT_FLIGHT_BY_ID = "SELECT flight_id, flight_number, scheduled_departure, scheduled_arrival, origin_airport, destination_airport, "
+            + "gate_id, flight_status, aircraft_id, created_at FROM flights WHERE flight_id = ?";
 
-    private static final String SELECT_FLIGHT_BY_NUMBER = "SELECT flight_id, flight_number, departure_time, arrival_time, origin, destination, "
-            + "gate_number, status, aircraft_type, capacity, created_at FROM flights WHERE flight_number = ?";
+    private static final String SELECT_FLIGHT_BY_NUMBER = "SELECT flight_id, flight_number, scheduled_departure, scheduled_arrival, origin_airport, destination_airport, "
+            + "gate_id, flight_status, aircraft_id, created_at FROM flights WHERE flight_number = ?";
 
-    private static final String UPDATE_FLIGHT = "UPDATE flights SET flight_number = ?, departure_time = ?, arrival_time = ?, origin = ?, "
-            + "destination = ?, gate_number = ?, status = ?, aircraft_type = ?, capacity = ? WHERE flight_id = ?";
+    private static final String UPDATE_FLIGHT = "UPDATE flights SET flight_number = ?, scheduled_departure = ?, scheduled_arrival = ?, origin_airport = ?, "
+            + "destination_airport = ?, gate_id = ?, flight_status = ?, aircraft_id = ? = ? WHERE flight_id = ?";
 
-    private static final String UPDATE_FLIGHT_STATUS = "UPDATE flights SET status = ? WHERE flight_id = ?";
+    private static final String UPDATE_FLIGHT_STATUS = "UPDATE flights SET flight_status = ? WHERE flight_id = ?";
 
-    private static final String UPDATE_FLIGHT_GATE = "UPDATE flights SET gate_number = ? WHERE flight_id = ?";
+    private static final String UPDATE_FLIGHT_GATE = "UPDATE flights SET gate_id = ? WHERE flight_id = ?";
 
     private static final String DELETE_FLIGHT = "DELETE FROM flights WHERE flight_id = ?";
 
-    private static final String SELECT_FLIGHTS_BY_DATE_RANGE = "SELECT flight_id, flight_number, departure_time, arrival_time, origin, destination, "
-            + "gate_number, status, aircraft_type, capacity, created_at FROM flights "
-            + "WHERE departure_time BETWEEN ? AND ? ORDER BY departure_time";
+    private static final String SELECT_FLIGHTS_BY_DATE_RANGE = "SELECT flight_id, flight_number, scheduled_departure, scheduled_arrival, origin_airport, destination_airport, "
+            + "gate_id, flight_status, aircraft_id, created_at FROM flights "
+            + "WHERE scheduled_departure BETWEEN ? AND ? ORDER BY scheduled_departure";
 
-    private static final String SELECT_FLIGHTS_BY_STATUS = "SELECT flight_id, flight_number, departure_time, arrival_time, origin, destination, "
-            + "gate_number, status, aircraft_type, capacity, created_at FROM flights "
-            + "WHERE status = ? ORDER BY departure_time";
+    private static final String SELECT_FLIGHTS_BY_STATUS = "SELECT flight_id, flight_number, scheduled_departure, scheduled_arrival, origin_airport, destination_airport, "
+            + "gate_id, flight_status, aircraft_id, created_at FROM flights "
+            + "WHERE flight_status = ? ORDER BY scheduled_departure";
 
     /**
      * Inserts a new flight into the database
@@ -260,12 +260,12 @@ public class FlightDAO {
     }
 
     /**
-     * Updates only the status of a flight
+     * Updates only the flight_status of a flight
      */
-    public boolean updateFlightStatus(int flightId, FlightStatus status)
+    public boolean updateFlightStatus(int flightId, FlightStatus flight_status)
             throws AeroDeskException {
-        if (status == null) {
-            throw new AeroDeskException("Flight status cannot be null",
+        if (flight_status == null) {
+            throw new AeroDeskException("Flight flight_status cannot be null",
                     ErrorCategory.DATABASE_ERROR);
         }
 
@@ -275,21 +275,21 @@ public class FlightDAO {
         try {
             connection = DatabaseConnection.getConnection();
             statement = connection.prepareStatement(UPDATE_FLIGHT_STATUS);
-            statement.setString(1, status.name());
+            statement.setString(1, flight_status.name());
             statement.setInt(2, flightId);
 
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0) {
-                LOGGER.info("Flight status updated to " + status + " for flight ID: "
+                LOGGER.info("Flight flight_status updated to " + flight_status + " for flight ID: "
                         + flightId);
                 return true;
             }
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error updating flight status for ID: " + flightId,
+            LOGGER.log(Level.SEVERE, "Error updating flight flight_status for ID: " + flightId,
                     e);
-            throw new AeroDeskException("Failed to update flight status", e);
+            throw new AeroDeskException("Failed to update flight flight_status", e);
         } finally {
             closeResources(null, statement, connection);
         }
@@ -392,9 +392,9 @@ public class FlightDAO {
     }
 
     /**
-     * Retrieves flights by status
+     * Retrieves flights by flight_status
      */
-    public List<Flight> getFlightsByStatus(FlightStatus status) throws AeroDeskException {
+    public List<Flight> getFlightsByStatus(FlightStatus flight_status) throws AeroDeskException {
         List<Flight> flights = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -403,7 +403,7 @@ public class FlightDAO {
         try {
             connection = DatabaseConnection.getConnection();
             statement = connection.prepareStatement(SELECT_FLIGHTS_BY_STATUS);
-            statement.setString(1, status.name());
+            statement.setString(1, flight_status.name());
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -411,11 +411,11 @@ public class FlightDAO {
             }
 
             LOGGER.info(
-                    "Retrieved " + flights.size() + " flights with status: " + status);
+                    "Retrieved " + flights.size() + " flights with flight_status: " + flight_status);
 
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error retrieving flights by status: " + status, e);
-            throw new AeroDeskException("Failed to retrieve flights by status", e);
+            LOGGER.log(Level.SEVERE, "Error retrieving flights by flight_status: " + flight_status, e);
+            throw new AeroDeskException("Failed to retrieve flights by flight_status", e);
         } finally {
             closeResources(resultSet, statement, connection);
         }
@@ -432,20 +432,19 @@ public class FlightDAO {
         flight.setFlightId(resultSet.getInt("flight_id"));
         flight.setFlightNumber(resultSet.getString("flight_number"));
         flight.setDepartureTime(
-                resultSet.getTimestamp("departure_time").toLocalDateTime());
-        flight.setArrivalTime(resultSet.getTimestamp("arrival_time").toLocalDateTime());
-        flight.setOrigin(resultSet.getString("origin"));
-        flight.setDestination(resultSet.getString("destination"));
-        flight.setGateNumber(resultSet.getInt("gate_number"));
-        flight.setStatus(FlightStatus.valueOf(resultSet.getString("status")));
-        flight.setAircraftType(resultSet.getInt("aircraft_type"));
-        flight.setCapacity(resultSet.getInt("capacity"));
+                resultSet.getTimestamp("scheduled_departure").toLocalDateTime());
+        flight.setArrivalTime(resultSet.getTimestamp("scheduled_arrival").toLocalDateTime());
+        flight.setOrigin(resultSet.getString("origin_airport"));
+        flight.setDestination(resultSet.getString("destination_airport"));
+        flight.setGateNumber(resultSet.getInt("gate_id"));
+        flight.setStatus(FlightStatus.valueOf(resultSet.getString("flight_status")));
+        flight.setAircraftType(resultSet.getInt("aircraft_id"));
+        //flight.setCapacity(resultSet.getInt"));
 
         Timestamp createdTimestamp = resultSet.getTimestamp("created_at");
         if (createdTimestamp != null) {
             flight.setCreatedAt(createdTimestamp.toLocalDateTime());
         }
-
         return flight;
     }
 
