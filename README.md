@@ -201,14 +201,13 @@ The application uses a MySQL database with the following core tables:
 
 | Name | Student ID | Role | Contact |
 |------|------------|------|---------|
-| Charaka Hashan | ------- | Project Lead & Backend Developer & Database Management & API Integration |  |
+| Charaka Hashan | ------- | Project Lead & Backend Developer & Database Management & API Integration | [@Mavros-Lykos](https://www.github.com/Mavros-Lykos) |
 | Rashi Himaya | -------  | GUI Developer  | |
 | Osada Gaya Suraweera | -------  | GUI Developer  |  |
 | Himasha Shehan| -------  | GUI Developer  |  |
-| Mohommad Aakil | -------  | API Integration & Testing |  |
 | Shakya Kariyawasam | -------  | Documentation & Quality Assurance |  |
 | Mohommad Aakil | -------  | Documentation & Quality Assurance |  |
-| Pathum Kaushallaya | -------  | GUI Developer & Quality Assurance & Database Designer | |
+| Pathum Kaushallaya | -------  | GUI Developer & Database Designer & Quality Assurance & Testing | |
 
 ---
 
