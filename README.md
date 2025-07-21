@@ -321,7 +321,7 @@ This project demonstrates proficiency in:
 **Course**: BSC[Hons] Software Engineering  
 **Semester**: 2nd level  
 **Institution**: Java Institute for Advance Technology Sri Lanka  
-**Instructor**: Mr.Tharaka Sankalpa, Mr.Achira Dissanayake, Mr.Tashila Dilshan
+**Instructor**: Mr.Tharaka Sankalpa, Mr.Achira Dassanayake, Mr.Tashila Dilshan
 
 This project serves as a capstone demonstration of software engineering principles learned throughout the course, showcasing practical application of theoretical concepts in a real-world scenario.
 
