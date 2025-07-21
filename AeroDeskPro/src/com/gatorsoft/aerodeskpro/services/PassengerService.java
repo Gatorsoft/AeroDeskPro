@@ -210,4 +210,22 @@ public class PassengerService {
             throw new AeroDeskException("Email is required.", AeroDeskException.ErrorCategory.VALIDATION_ERROR);
         }
     }
+    
+     //private PassengerDAO passengerDAO;  // Assuming the DAO is already initialized
+
+
+    /**
+     * Retrieves all passengers.
+     */
+    public List<Passenger> getAllPassengers() throws AeroDeskException {
+        try {
+            // Fetch all passengers from the DAO
+            List<Passenger> passengers = passengerDAO.getAllPassengers();
+            return passengers;
+        } catch (Exception e) {
+            // Log and rethrow the exception
+            throw new AeroDeskException("Error fetching all passengers.", e, AeroDeskException.ErrorCategory.SYSTEM_ERROR, "FETCH_ALL_PASSENGERS");
+        }
+    }
+
 }

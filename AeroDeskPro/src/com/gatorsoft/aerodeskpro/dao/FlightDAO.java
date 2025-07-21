@@ -66,6 +66,9 @@ public class FlightDAO {
 
     /**
      * Inserts a new flight into the database
+     * @param flight
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
     public boolean insertFlight(Flight flight) throws AeroDeskException {
         if (flight == null || !flight.isValid()) {
@@ -117,6 +120,8 @@ public class FlightDAO {
 
     /**
      * Retrieves all flights from the database
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
     public List<Flight> getAllFlights() throws AeroDeskException {
         List<Flight> flights = new ArrayList<>();
@@ -133,7 +138,7 @@ public class FlightDAO {
                 flights.add(mapResultSetToFlight(resultSet));
             }
 
-            LOGGER.info("Retrieved " + flights.size() + " flights from database");
+            LOGGER.log(Level.INFO, "Retrieved {0} flights from database", flights.size());
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error retrieving all flights", e);
@@ -164,7 +169,7 @@ public class FlightDAO {
 
             if (resultSet.next()) {
                 Flight flight = mapResultSetToFlight(resultSet);
-                LOGGER.info("Flight found: " + flight.getFlightNumber());
+                LOGGER.log(Level.INFO, "Flight found: {0}", flight.getFlightNumber());
                 return flight;
             }
 
@@ -180,6 +185,9 @@ public class FlightDAO {
 
     /**
      * Finds a flight by its flight number
+     * @param flightNumber
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
     public Flight getFlightByNumber(String flightNumber) throws AeroDeskException {
         if (flightNumber == null || flightNumber.trim().isEmpty()) {
@@ -199,7 +207,7 @@ public class FlightDAO {
 
             if (resultSet.next()) {
                 Flight flight = mapResultSetToFlight(resultSet);
-                LOGGER.info("Flight found by number: " + flight.getFlightNumber());
+                LOGGER.log(Level.INFO, "Flight found by number: {0}", flight.getFlightNumber());
                 return flight;
             }
 
@@ -216,6 +224,9 @@ public class FlightDAO {
 
     /**
      * Updates an existing flight
+     * @param flight
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
     public boolean updateFlight(Flight flight) throws AeroDeskException {
         if (flight == null || !flight.isValid() || flight.getFlightId() <= 0) {
@@ -244,7 +255,7 @@ public class FlightDAO {
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0) {
-                LOGGER.info("Flight updated successfully: " + flight.getFlightNumber());
+                LOGGER.log(Level.INFO, "Flight updated successfully: {0}", flight.getFlightNumber());
                 return true;
             }
 
@@ -261,6 +272,10 @@ public class FlightDAO {
 
     /**
      * Updates only the flight_status of a flight
+     * @param flightId
+     * @param flight_status
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException 
      */
     public boolean updateFlightStatus(int flightId, FlightStatus flight_status)
             throws AeroDeskException {
@@ -281,8 +296,7 @@ public class FlightDAO {
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0) {
-                LOGGER.info("Flight flight_status updated to " + flight_status + " for flight ID: "
-                        + flightId);
+                LOGGER.log(Level.INFO, "Flight flight_status updated to {0} for flight ID: {1}", new Object[]{flight_status, flightId});
                 return true;
             }
 
@@ -299,6 +313,10 @@ public class FlightDAO {
 
     /**
      * Updates the gate assignment for a flight
+     * @param flightId
+     * @param gateNumber
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException 
      */
     public boolean updateFlightGate(int flightId, String gateNumber)
             throws AeroDeskException {
@@ -314,8 +332,7 @@ public class FlightDAO {
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0) {
-                LOGGER.info(
-                        "Gate updated to " + gateNumber + " for flight ID: " + flightId);
+                LOGGER.log(Level.INFO, "Gate updated to {0} for flight ID: {1}", new Object[]{gateNumber, flightId});
                 return true;
             }
 
@@ -331,6 +348,9 @@ public class FlightDAO {
 
     /**
      * Deletes a flight from the database
+     * @param flightId
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
     public boolean deleteFlight(int flightId) throws AeroDeskException {
         Connection connection = null;
@@ -344,7 +364,7 @@ public class FlightDAO {
             int rowsAffected = statement.executeUpdate();
 
             if (rowsAffected > 0) {
-                LOGGER.info("Flight deleted successfully with ID: " + flightId);
+                LOGGER.log(Level.INFO, "Flight deleted successfully with ID: {0}", flightId);
                 return true;
             }
 
@@ -360,6 +380,10 @@ public class FlightDAO {
 
     /**
      * Retrieves flights within a date range
+     * @param startDate
+     * @param endDate
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException 
      */
     public List<Flight> getFlightsByDateRange(LocalDateTime startDate,
             LocalDateTime endDate) throws AeroDeskException {
@@ -379,7 +403,7 @@ public class FlightDAO {
                 flights.add(mapResultSetToFlight(resultSet));
             }
 
-            LOGGER.info("Retrieved " + flights.size() + " flights for date range");
+            LOGGER.log(Level.INFO, "Retrieved {0} flights for date range", flights.size());
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error retrieving flights by date range", e);
@@ -393,6 +417,9 @@ public class FlightDAO {
 
     /**
      * Retrieves flights by flight_status
+     * @param flight_status
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
     public List<Flight> getFlightsByStatus(FlightStatus flight_status) throws AeroDeskException {
         List<Flight> flights = new ArrayList<>();
@@ -410,8 +437,7 @@ public class FlightDAO {
                 flights.add(mapResultSetToFlight(resultSet));
             }
 
-            LOGGER.info(
-                    "Retrieved " + flights.size() + " flights with flight_status: " + flight_status);
+            LOGGER.log(Level.INFO, "Retrieved {0} flights with flight_status: {1}", new Object[]{flights.size(), flight_status});
 
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error retrieving flights by flight_status: " + flight_status, e);

@@ -20,6 +20,8 @@ public class AeroDeskException extends Exception {
 
     /**
      * Constructor with message and cause
+     * @param message
+     * @param cause
      */
     public AeroDeskException(String message, Throwable cause) {
         super(message, cause);
@@ -30,6 +32,9 @@ public class AeroDeskException extends Exception {
 
     /**
      * Constructor with message, cause and category
+     * @param message
+     * @param cause
+     * @param category
      */
     public AeroDeskException(String message, Throwable cause, ErrorCategory category) {
         super(message, cause);
@@ -40,6 +45,10 @@ public class AeroDeskException extends Exception {
 
     /**
      * Constructor with message, cause, category and error code
+     * @param message
+     * @param cause
+     * @param category
+     * @param errorCode
      */
     public AeroDeskException(String message, Throwable cause, ErrorCategory category, String errorCode) {
         super(message, cause);
@@ -50,6 +59,11 @@ public class AeroDeskException extends Exception {
 
     /**
      * Constructor with message, cause, category, error code and parameters
+     * @param message
+     * @param cause
+     * @param category
+     * @param errorCode
+     * @param parameters
      */
     public AeroDeskException(String message, Throwable cause, ErrorCategory category,
             String errorCode, Object... parameters) {
@@ -65,6 +79,8 @@ public class AeroDeskException extends Exception {
 
     /**
      * Constructor with message and category
+     * @param message
+     * @param category
      */
     public AeroDeskException(String message, ErrorCategory category) {
         this(message, null, category);
@@ -84,6 +100,7 @@ public class AeroDeskException extends Exception {
 
     /**
      * Returns a detailed error message including category and error code
+     * @return 
      */
     public String getDetailedMessage() {
         StringBuilder sb = new StringBuilder();
