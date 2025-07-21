@@ -24,7 +24,7 @@ public class FlightTableFrame extends JFrame {
         // Set JFrame properties
         setTitle("Flight Details");
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 600);
 
         // Initialize the table
@@ -34,7 +34,7 @@ public class FlightTableFrame extends JFrame {
 
         // Call method to load flight data into the table
         loadFlightData();
-
+setLocationRelativeTo(null);
         // Set the window to be visible
         setVisible(true);
     }
