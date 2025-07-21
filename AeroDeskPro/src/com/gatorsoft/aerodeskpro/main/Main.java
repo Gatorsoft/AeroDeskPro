@@ -1,9 +1,9 @@
 package com.gatorsoft.aerodeskpro.main;
 
-import com.gatorsoft.aerodeskpro.utils.PassengerTableFrame;
+import com.gatorsoft.aerodeskpro.gui.tables.PassengerTableFrame;
 import com.gatorsoft.aerodeskpro.api.WeatherChartFrame;
 import com.gatorsoft.aerodeskpro.gui.AirportManagementSystem;
-import com.gatorsoft.aerodeskpro.utils.FlightTableFrame;
+import com.gatorsoft.aerodeskpro.gui.tables.FlightTableFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
