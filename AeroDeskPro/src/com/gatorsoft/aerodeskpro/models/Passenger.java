@@ -10,6 +10,10 @@ import java.util.regex.Pattern;
  */
 public class Passenger {
 
+    public Object getPhoneNumber() {
+        return phone;
+    }
+
     public enum Gender {
         M, F, Other
     }
