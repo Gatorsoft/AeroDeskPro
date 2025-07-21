@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -111,8 +110,10 @@ public class PassengerDAO {
 
     /**
      * Retrieves all passengers from the database
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
-    public List<Passenger> getAllPassengers() throws AeroDeskException {
+    public List<Passenger> getAllPassengersNum() throws AeroDeskException {
         List<Passenger> passengers = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -459,4 +460,52 @@ public class PassengerDAO {
             LOGGER.log(Level.WARNING, "Error closing database resources", e);
         }
     }
+    
+    /**
+     * Retrieves all passengers from the database.
+     */
+/*
+@return
+ */
+   public List<Passenger> getAllPassengers() throws AeroDeskException {
+    List<Passenger> passengers = new ArrayList<>();
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    String sql = "SELECT passenger_id, first_name, last_name, passport_number, nationality, "
+            + "date_of_birth, gender, email, phone, frequent_flyer_number, created_at "
+            + "FROM passengers";
+
+    try {
+        // Establish the database connection
+        connection = DatabaseConnection.getConnection();
+
+        // Prepare the SQL statement (no parameters needed here)
+        statement = connection.prepareStatement(sql);
+
+        // Execute the query and get the result set
+        resultSet = statement.executeQuery();
+
+        // Iterate over the result set and map the result to a list of Passenger objects
+        while (resultSet.next()) {
+            passengers.add(mapResultSetToPassenger(resultSet));
+        }
+
+        // Log success
+        LOGGER.info("Found " + passengers.size() + " passengers.");
+
+    } catch (SQLException e) {
+        // Handle any SQL exceptions
+        LOGGER.log(Level.SEVERE, "Error retrieving all passengers", e);
+        throw new AeroDeskException("Failed to retrieve all passengers", e);
+    } finally {
+        // Ensure resources are closed after use
+        closeResources(resultSet, statement, connection);
+    }
+
+    return passengers;
+}
+
+
 }
