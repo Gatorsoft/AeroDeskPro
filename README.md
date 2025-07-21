@@ -12,7 +12,7 @@
 
 ## 🎯 Hackathon Context
 
-**AeroDesk Pro** was developed as part of a **24-hour academic hackathon** — _Hackathon Help 2024_, held on **July 19–20**.
+**AeroDesk Pro** was developed as part of a **24-hour academic hackathon** — _Hackathon 2024_, held on **July 19–20**.
 
 The challenge was to design and implement a working prototype that addressed real-world airport management problems using desktop technologies.
 
@@ -222,8 +222,9 @@ The application uses a MySQL database with the following core tables:
 
 ## 📝 License
 
-This project is licensed under the
-Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license.
+
+This project is licensed under the  
+**[Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/)**.
 
 You are free to:
 
@@ -237,9 +238,11 @@ Attribution — You must give appropriate credit, provide a link to the license,
 
 NonCommercial — You may not use the material for commercial purposes.
 
-This project is intended strictly for educational and academic use.
-Commercial usage, redistribution for profit, or deployment in production environments is not permitted.
-
+<!-- This project is licensed under the  
+**[Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/)**.
+-->
+It is intended strictly for **educational and academic use**.  
+Commercial use, redistribution for profit, or production deployment is **not permitted**.
 
 **Academic Use Only** - This software is provided for educational purposes and should not be used in production environments without proper security auditing and testing.
 
@@ -319,7 +322,7 @@ This project demonstrates proficiency in:
 **Course**: BSC[Hons] Software Engineering  
 **Semester**: 2nd level  
 **Institution**: Java Institute for Advance Technology Sri Lanka  
-**Instructor**: Mr.Tharaka 
+**Instructor**: Mr.Tharaka Sankalpa, Mr.Achira Dissanayake, Mr.Tashila Dilshan
 
 This project serves as a capstone demonstration of software engineering principles learned throughout the course, showcasing practical application of theoretical concepts in a real-world scenario.
 
