@@ -463,6 +463,8 @@ public class PassengerDAO {
     
     /**
      * Retrieves all passengers from the database.
+     * @return 
+     * @throws com.gatorsoft.aerodeskpro.exceptions.AeroDeskException
      */
 /*
 @return
@@ -480,21 +482,17 @@ public class PassengerDAO {
     try {
         // Establish the database connection
         connection = DatabaseConnection.getConnection();
-
         // Prepare the SQL statement (no parameters needed here)
         statement = connection.prepareStatement(sql);
-
         // Execute the query and get the result set
         resultSet = statement.executeQuery();
-
         // Iterate over the result set and map the result to a list of Passenger objects
         while (resultSet.next()) {
             passengers.add(mapResultSetToPassenger(resultSet));
         }
-
         // Log success
-        LOGGER.info("Found " + passengers.size() + " passengers.");
-
+        LOGGER.log(Level.INFO, "Found {0} passengers.", passengers.size());
+        
     } catch (SQLException e) {
         // Handle any SQL exceptions
         LOGGER.log(Level.SEVERE, "Error retrieving all passengers", e);
