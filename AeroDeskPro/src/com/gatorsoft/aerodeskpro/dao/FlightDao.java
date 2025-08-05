@@ -6,8 +6,8 @@ package com.gatorsoft.aerodeskpro.dao;
 
 /**
  *
- * @author User
+ * @author Acer
  */
-public class FlightDao {
+public class NewClass {
     
 }
